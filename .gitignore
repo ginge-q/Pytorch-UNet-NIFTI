@@ -4,6 +4,11 @@ __pycache__/
 checkpoints/
 *.pth
 *.jpg
+*.png
+*.nii
+*.nii.gz
 venv/
 .idea/
 wandb/
+predictions/
+visualizations/

@@ -1,0 +1,83 @@
+﻿==============================
+Baseline U-Net Experiment
+==============================
+
+Task:
+Placenta MRI segmentation - COR direction
+
+Dataset:
+250 valid patient cases
+
+Patient-level split:
+Train: 175
+Validation: 37
+Test: 38
+
+Split seed:
+42
+
+Input:
+Single-channel MRI
+
+Target:
+Binary placenta segmentation
+
+Image preprocessing:
+- NIfTI read with SimpleITK
+- [Z,H,W] slice extraction
+- Per-slice z-score normalization
+- Resize image to 512x512
+- Bilinear interpolation for image
+- Nearest-neighbor interpolation for mask
+
+Baseline network:
+Classic 2D U-Net
+
+Network:
+n_channels = 1
+n_classes = 2
+bilinear = False
+
+Training:
+Epochs = 5
+Batch size = 2
+Learning rate = 1e-4
+Optimizer = Adam
+Loss = CrossEntropyLoss + DiceLoss
+
+Best validation result:
+Epoch = 5
+Validation Dice = 0.5367947833432277
+
+Best checkpoint:
+checkpoints\baseline_unet_cor_best.pth
+
+Test:
+38 independent patients
+3D NIfTI prediction
+Prediction directory:
+predictions\baseline_cor
+
+Patient-level 3D Test Results:
+Dice      = 0.645041 ± 0.152560
+Median Dice = 0.677264
+
+IoU       = 0.491265 ± 0.136925
+Precision = 0.580526 ± 0.159520
+Recall    = 0.753655 ± 0.185553
+
+Per-patient test results:
+Saved in:
+baseline_test_metrics.csv
+
+Important:
+Future improved models must use the same:
+- Train/Val/Test split
+- Test patients
+- preprocessing
+- evaluation metrics
+- patient-level 3D evaluation procedure
+
+Purpose:
+This file records the baseline experiment before modifying
+the U-Net architecture.
