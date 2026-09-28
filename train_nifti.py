@@ -143,13 +143,13 @@ def main():
             desc=f"Epoch {epoch + 1}/{EPOCHS}"
         )
 
-        for batch in progress:
-            images = batch["image"].to(
+        for images, masks, _, _ in progress:
+            images = images.to(
                 DEVICE,
                 dtype=torch.float32
             )
 
-            masks = batch["mask"].to(
+            masks = masks.to(
                 DEVICE,
                 dtype=torch.long
             )
@@ -181,16 +181,16 @@ def main():
         val_batches = 0
 
         with torch.no_grad():
-            for batch in tqdm(
+            for images, masks, _, _ in tqdm(
                 val_loader,
                 desc="Validation"
             ):
-                images = batch["image"].to(
+                images = images.to(
                     DEVICE,
                     dtype=torch.float32
                 )
 
-                masks = batch["mask"].to(
+                masks = masks.to(
                     DEVICE,
                     dtype=torch.long
                 )
